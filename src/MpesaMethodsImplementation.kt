@@ -5,6 +5,7 @@ class MpesaMethodsImplementation : Mpesa {
     var phoneNumber:String = ""
     var amount:Int = 0
     var balance:Double = 1000.00
+    val agentNo:Int = 14141
     var pin:Int = 1234
     var pin2:Int = 0
     val reader = Scanner(System. `in`)
@@ -23,8 +24,11 @@ class MpesaMethodsImplementation : Mpesa {
     }
 
     override fun sendMoney() {
+        /**
+         * I will skip the part for search SIM contacts
+         */
+
         println("Enter phone number: ")
-        //scanning the phone number
         phoneNumber = reader.nextLine()
         println("Enter Amount: ")
         amount = reader.nextInt()
@@ -53,7 +57,43 @@ class MpesaMethodsImplementation : Mpesa {
     }
 
     override fun withdrawCash() {
-        TODO("Not yet implemented")
+        /**
+         * I will skip the part for "From ATM"
+         * I will use a constant transaction cost of Ksh27.00
+         */
+
+        val transaction_cost = 27
+        println("Enter agent no.")
+        var agentNo2 = reader.nextInt()
+        println("Enter amount: ")
+        amount = reader.nextInt()
+        println("Enter M-PESA pin:")
+        pin2 = reader.nextInt()
+
+        //970<=997
+        if(agentNo==agentNo2 && ((amount in 1..99999) && balance>=amount+transaction_cost)&&pin==pin2){
+            balance-=(amount+transaction_cost)
+            println("${randomCode()} Confirmed on ${date_time()} withdraw Ksh$amount from $agentNo - Joe Investments." +
+                    " New M-PESA balance is " +
+                    "Ksh$balance. Transaction cost, Ksh$transaction_cost")
+        }
+        else if(agentNo!=agentNo2){
+            println("Failed. The Till Number you entered does not exist.\n" +
+                    " Kindly confirm the correct one before transaction")
+        }
+        else if((amount in 1..99999)&&balance<amount+transaction_cost){
+            println("Failed." +
+                    " you do not have enough money in your M-PESA account to withdraw Ksh$amount. " +
+                    "You must be able to pay the transaction" +
+                    " fee as well as the requested amount.\n"+
+                    "Your M-PESA balance is KSH$balance.")
+        }
+        else if(pin2!=pin){
+            println("You have entered the wrong PIN. Please try again.")
+        }
+        else{
+            println("An Error occurred please try again")
+        }
     }
 
     override fun buyAirtime() {
