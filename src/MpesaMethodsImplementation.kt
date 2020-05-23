@@ -5,8 +5,8 @@ class MpesaMethodsImplementation : Mpesa {
     var phoneNumber:String = ""
     var amount:Int = 0
     var balance:Double = 1000.00
-    var pin:String = "1234"
-    var pin2:String = ""
+    var pin:Int = 1234
+    var pin2:Int = 0
     val reader = Scanner(System. `in`)
     val alphabets: List<Char> = ('A'..'Z')+('0'..'9')
 
@@ -29,12 +29,26 @@ class MpesaMethodsImplementation : Mpesa {
         println("Enter Amount: ")
         amount = reader.nextInt()
         println("Enter M-PESA PIN: ")
-        pin2 =reader.nextLine()
-        if (phoneNumber.length==10 && (amount in 1..99999) && pin2==pin){
-            balance = balance - amount
+        pin2 =reader.nextInt()
+        if (phoneNumber.length==10 && ((amount in 1..99999)&&amount<=balance) && pin2==pin){
+            balance -= amount
             println("${randomCode()} Confirmed Ksh$amount sent to $phoneNumber  on ${date_time()} " +
                     "New M-PESA balance is Ksh${balance}. Transaction cost, Ksh0.00.")
-
+        }
+        else if(phoneNumber.length<10){
+            println("The MSISDN of the customer does not exist or is not in the specific number segment.")
+        }
+        else if((amount in 1..99999)&& (amount>balance)){
+            println("Failed\n" +
+                    "Not enough money in your M-PESA account to send Ksh$amount. You must be able to pay the transaction" +
+                    "fee as well as the requested amount.\n"+
+                    "Your M-PESA balance is KSH$balance. Use Fuliza M-PESA")
+        }
+        else if(pin2!=pin){
+            println("You have entered the wrong PIN. Please try again.")
+        }
+        else{
+            println("An Error occurred please try again")
         }
     }
 
