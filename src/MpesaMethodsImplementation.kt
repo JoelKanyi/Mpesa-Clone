@@ -110,12 +110,11 @@ class MpesaMethodsImplementation : Mpesa {
                 println("${randomCode()} confirmed you bought Ksh$amount of airtime on ${date_time()}. New M-PESA balance " +
                         "is Ksh${balance}. Transaction cost, Ksh0.00.")
             }
-
-            else if(balance<amount){
-                "Failed you do not have enough money in your M-PESA account to buy airtime of Ksh$amount. " +
+            else if(amount>balance){
+                println("Failed you do not have enough money in your M-PESA account to buy airtime of Ksh$amount. " +
                         "You must be able to pay the transaction" +
                         " fee as well as the requested amount.\n"+
-                        "Your M-PESA balance is KSH$balance."
+                        "Your M-PESA balance is KSH$balance.")
             }
             else if (pin2!=pin){
                 println("You have entered the wrong PIN. Please try again.")
@@ -143,10 +142,10 @@ class MpesaMethodsImplementation : Mpesa {
                 println("The MSISDN of the customer does not exist or is not in the specific number segment.")
             }
             else if(balance<amount){
-                "Failed you do not have enough money in your M-PESA account to buy airtime of Ksh$amount. " +
+                println("Failed you do not have enough money in your M-PESA account to buy airtime of Ksh$amount. " +
                         "You must be able to pay the transaction" +
                         " fee as well as the requested amount.\n"+
-                        "Your M-PESA balance is KSH$balance."
+                        "Your M-PESA balance is KSH$balance.")
             }
             else if (pin2!=pin){
                 println("You have entered the wrong PIN. Please try again.")
