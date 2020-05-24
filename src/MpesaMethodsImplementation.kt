@@ -97,7 +97,46 @@ class MpesaMethodsImplementation : Mpesa {
     }
 
     override fun buyAirtime() {
-        TODO("Not yet implemented")
+        println("Choose 1 for my phone or 2 for other phone")
+        var choice = reader.nextInt()
+        if(choice==1){
+            println("Enter Amount")
+            amount = reader.nextInt()
+            println("Enter M-PESA PIN: ")
+            pin2 = reader.nextInt()
+
+            if(amount in 5..100000 && balance>=amount && pin2==pin){
+                balance-=amount
+                println("${randomCode()} confirmed you bought Ksh$amount of airtime on ${date_time()}. New M-PESA balance " +
+                        "is Ksh${balance}. Transaction cost, Ksh0.00.")
+            }
+
+            else if(balance<amount){
+                "Failed you do not have enough money in your M-PESA account to buy airtime of Ksh$amount. " +
+                        "You must be able to pay the transaction" +
+                        " fee as well as the requested amount.\n"+
+                        "Your M-PESA balance is KSH$balance."
+            }
+            else if (pin2!=pin){
+                println("You have entered the wrong PIN. Please try again.")
+            }
+            else{
+                println("An Error occurred please try again")
+            }
+        }
+        else if(choice==2){
+            //I will not work on search SIM Contacts
+            println("Enter phone no.")
+            phoneNumber = reader.nextLine()
+            println("Enter Amount")
+            amount = reader.nextInt()
+            println("Enter M-PESA PIN: ")
+            pin2 = reader.nextInt()
+        }
+        else{
+            //i will implement a loop so that one can repeat
+            println("Invalid choice")
+        }
     }
 
     override fun lipaNaMpesa() {
