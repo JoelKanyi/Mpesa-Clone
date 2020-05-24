@@ -5,11 +5,17 @@ class MpesaMethodsImplementation : Mpesa {
     var phoneNumber:String = ""
     var amount:Int = 0
     var balance:Double = 1000.00
-    val agentNo:Int = 14141
-    var pin:Int = 1234
+    private val agentNo:Int = 14141
+    private val tillNo:String = 345567.toString()
+    private var tillNo2:String = ""
+    private val paybill:String = 220220.toString()
+    private var paybill2:String = ""
+    private var accountNo:String = ""
+    private val paybillName = "PesaPal"
+    private var pin:Int = 1234
     var pin2:Int = 0
-    val reader = Scanner(System. `in`)
-    val alphabets: List<Char> = ('A'..'Z')+('0'..'9')
+    private val reader = Scanner(System. `in`)
+    private val alphabets: List<Char> = ('A'..'Z')+('0'..'9')
 
 
     fun randomCode():String{
@@ -21,6 +27,29 @@ class MpesaMethodsImplementation : Mpesa {
         val formatter = SimpleDateFormat.getDateTimeInstance() //or use getDateInstance()
         //val formatedDate = formatter.format(date)
         return formatter.format(date)
+    }
+    fun transactionCostCalculator(amount:Int):Double{
+        when (amount) {
+            in 1..49 -> {
+                return 1.0
+            }
+            in 50..99 -> {
+                return 2.0
+            }
+            in 100..499 -> {
+                return 19.0
+            }
+            in 500..999 -> {
+                return 23.0
+            }
+            in 1000..4999 -> {
+                return 49.0
+            }
+            else -> {
+                return 84.0
+            }
+        }
+
     }
 
     override fun sendMoney() {
@@ -161,7 +190,55 @@ class MpesaMethodsImplementation : Mpesa {
     }
 
     override fun lipaNaMpesa() {
-        TODO("Not yet implemented")
+        //pay bill and buy goods and services
+        println("Choose 1 for Pay Bill or 2 for Buy goods and services")
+        var choice = reader.nextInt()
+        if (choice==1){
+            //I will skip search SIM Contact
+            println("Enter business number")
+            paybill2 = reader.next()
+            //I will skip search SIM Contact
+            println("Account no")
+            accountNo = reader.next()
+            println("Enter Amount")
+            amount = reader.nextInt()
+            println("Enter M-PESA PIN")
+            pin2 = reader.nextInt()
+            if(paybill2==paybill && accountNo.length==10 && amount in 1..99999 && balance>=amount+transactionCostCalculator(amount) && pin2==pin){
+                balance-=(amount+transactionCostCalculator(amount))
+                println("${randomCode()} Confirmed Ksh$amount sent to $paybillName for account $accountNo on${date_time()}. " +
+                        "New M-PESA balance is Ksh$balance. Transaction cost, Ksh${transactionCostCalculator(amount)}")
+            }
+            else if (paybill2!=paybill){
+                println("Incorrect paybill number")
+            }
+            else if (accountNo.length<10){
+                println("The value of the parameter\n" +
+                        "$accountNo is incorrect")
+            }
+            else if (amount in 1..99999 && balance<amount+transactionCostCalculator(amount)){
+                println("Failed you do not have enough money in your M-PESA account to buy pay Ksh$amount.to $paybillName"+
+                        "Your M-PESA balance is KSH$balance.")
+            }
+            else if (pin2!=pin){
+                println("You have entered the wrong PIN. Please try again.")
+            }
+            else{
+                println("An Error occurred please try again")
+            }
+
+        }
+        else if (choice==2){
+            println("Enter till no.")
+            tillNo2 = reader.next()
+            println("Enter Amount")
+            amount = reader.nextInt()
+            println("Enter M-PESA PIN")
+            pin2 = reader.nextInt()
+        }
+        else{
+            println("Invalid choice")
+        }
     }
 
     override fun myAccount() {
