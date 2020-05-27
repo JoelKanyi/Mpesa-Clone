@@ -242,6 +242,9 @@ class MpesaMethodsImplementation : Mpesa {
     }
 
     override fun myAccount() {
-        TODO("Not yet implemented")
+        /**
+        *check balance
+        *change pin
+        **/
     }
 }
