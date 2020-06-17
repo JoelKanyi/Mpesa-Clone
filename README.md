@@ -33,6 +33,6 @@ Please feel free to contact me if you have any questions, ideas or even if you j
 - [Facebook](https://www.facebook.com/joel.kanyi.71)
 - [LinkedIn](https://www.linkedin.com/in/joel-kanyi-037270174/) 
 
-References
-----------
+
+
 
